@@ -19,10 +19,23 @@
     .tab-content.active { display: block; }
 
     /* About page layout */
-    .about-container { display: flex; gap: 40px; align-items: flex-start; }
-    .about-left { flex: 1; text-align: center; }
-    .about-right { flex: 2; }
-    .about-left img { max-width: 100%; height: auto; border-radius: 10px; }
+    .about-container {
+      display: flex;
+      gap: 40px;
+      align-items: flex-start;
+    }
+    
+    .about-left {
+      flex: 1.5; /* Increase space from 1 to 1.5 or even 2 */
+      text-align: center;
+    }
+    
+    .about-left img {
+      max-width: 300px; /* Bigger images */
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
 
     /* Links styling */
     .links { color: #0076C2; display: flex; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
