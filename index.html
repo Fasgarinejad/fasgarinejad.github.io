@@ -1,385 +1,871 @@
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fatemeh Asgarinejad — Assistant Professor of Teaching, UCR</title>
+  <meta charset="utf-8">
+  <title>Fatemeh (Maral) Asgarinejad — UCR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    body { font-family: Arial, sans-serif; margin: 0; background: #fff; color: #222; text-align: justify; }
-    header { background-color: #ffffff; padding: 20px; display: flex; justify-content: space-between; align-items: center; }
-    #name { font-size: 24px; font-weight: bold; }
-    #title { font-size: 14px; color: #666; }
-    .contact { text-align: justify; font-size: 14px; }
-    .ucr-logo { height: 50px; margin-left: 15px; }
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 
-    .tabs { display: flex; justify-content: center; background-color: #003DA5; }
-    .tabs button { background-color: #003DA5; color: white; border: none; padding: 14px 20px; cursor: pointer; font-size: 16px; font-weight: bold; }
-    .tabs button:hover, .tabs button.active { background-color: #FFCC00; color: #003DA5; }
-    .tab-content { display: none; max-width: 900px; margin: auto; padding: 2rem; }
+  <style>
+    :root {
+      --blue: #003DA5;
+      --blue-mid: #185FA5;
+      --blue-light: #E6F1FB;
+      --blue-dark: #0C447C;
+      --gold: #FFCC00;
+      --text: #1a1a1a;
+      --muted: #666;
+      --border: rgba(0,0,0,0.1);
+      --bg: #ffffff;
+      --surface: #f8f9fc;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    a { color: var(--blue-mid); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      border-bottom: 1px solid var(--border);
+      padding: 15px 40px;
+      position: sticky;
+      top: 0;
+      background: white;
+      z-index: 200;
+    }
+
+    .navbar-inner {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .site-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--blue);
+    }
+
+    .navbar-contact {
+      text-align: right;
+    }
+
+    /* ── TABS ── */
+    .tabs {
+      background: var(--blue);
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0;
+      position: sticky;
+      top: 57px;
+      z-index: 100;
+    }
+
+    .tabs button {
+      background: transparent;
+      color: rgba(255,255,255,0.75);
+      border: none;
+      padding: 13px 22px;
+      cursor: pointer;
+      font-size: 14px;
+      font-family: 'Source Sans 3', sans-serif;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .tabs button:hover { background: rgba(255,255,255,0.1); color: white; }
+
+    .tabs button.active {
+      background: var(--gold);
+      color: var(--blue);
+      font-weight: 600;
+    }
+
+    /* ── LAYOUT ── */
+    .layout {
+      max-width: 1100px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 60px;
+      padding: 40px;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      position: sticky;
+      top: 110px;
+      align-self: start;
+    }
+
+    .profile-img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 18px;
+      display: block;
+    }
+
+    .s-name {
+      font-size: 19px;
+      font-weight: 600;
+      line-height: 1.3;
+      margin-bottom: 5px;
+    }
+
+    .s-role {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .social { display: flex; flex-direction: column; gap: 10px; }
+
+    .social a {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    .social i, .social img {
+      font-size: 14px;
+      width: 16px;
+      color: var(--blue-mid);
+    }
+
+    /* ── CONTENT ── */
+    .tab-content { display: none; }
     .tab-content.active { display: block; }
 
-    /* About page layout */
-    .about-container { display: flex; gap: 40px; align-items: flex-start; }
-    .about-left { flex: 1; text-align: center; }
-    .about-right { flex: 2; }
-    .about-left img { max-width: 100%; height: auto; border-radius: 10px; }
+    section { margin-bottom: 44px; }
 
-    /* Links styling */
-    .links { color: #0076C2; display: flex; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
-    .links a { color: #005A91; text-decoration: none; margin: 0 10px; font-size: 24px; }
-    .links a:hover { color: #0056b3; }
-
-    /* News box */
-    .violet-box { background-color: #f0fff0; color: black; padding: 12px 16px; border-radius: 8px; font-size: 16px; margin: 20px 0; max-width: 100%; word-wrap: break-word; }
-
-    /* University headings */
-    .university-heading { font-size: 18px; margin-top: 15px; font-weight: bold; color: #333; }
-    .university-heading.current { color: #003DA5; font-size: 1.2em; font-weight: bold; }
-    .university-heading.ucsd { color: #00629B; }
-    .university-heading.sdsu { color: #CC0000; }
-
-    /* Section headings */
-    .section-heading { font-size: 18px; font-weight: bold; border-bottom: 2px solid #0073e6; padding-bottom: 5px; margin-bottom: 15px; margin-top: 25px; }
-
-    /* Lists */
-    ul { list-style-type: none; padding-left: 0; }
-    li::before { content: "•"; color: #0073e6; font-size: 16px; margin-right: 8px; }
-    li { margin-bottom: 8px; }
-
-    /* Divider */
-    .hr-with-icon { display: flex; align-items: center; text-align: center; margin: 20px 0; }
-    .hr-with-icon::before, .hr-with-icon::after { content: ''; flex: 1; border-bottom: 2px solid #ccc; }
-    .hr-with-icon i { margin: 0 10px; color: #333; }
-
-    /* Legacy link pill */
-    .v-box { background: linear-gradient(135deg, rgba(243, 229, 0, 0.5) 30%, rgba(0, 198, 215, 0.5) 80%); color: black; padding: 6px 10px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 2px 0; }
-    .v-box:hover { background: linear-gradient(135deg, rgba(243, 229, 0, 0.7) 30%, rgba(0, 198, 215, 0.7) 80%); }
-
-    /* === New: Course Cards (cooler than simple pills) === */
-    .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 12px; }
-
-    .course-card { position: relative; border-radius: 18px; padding: 18px; color: #0d1b2a; overflow: hidden; background: #ffffff; border: 1px solid rgba(0,0,0,0.08); box-shadow: 0 8px 20px rgba(0,0,0,0.06);
-      transition: transform .2s ease, box-shadow .2s ease; }
-
-    /* Animated gradient ring */
-    .course-card::before { content: ""; position: absolute; inset: -2px; z-index: 0; border-radius: 20px; padding: 2px; background: conic-gradient(from 180deg, #003DA5, #00C6D7, #FFCC00, #003DA5); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: .7; animation: spin 6s linear infinite; }
-
-    @keyframes spin { to { transform: rotate(1turn); } }
-
-    .course-card .inner { position: relative; z-index: 1; background: #ffffff; border-radius: 14px; padding: 12px; }
-
-    .course-header { display: flex; align-items: center; gap: 10px; }
-    .course-icon { font-size: 24px; color: #003DA5; }
-    .course-code { font-weight: 800; font-size: 18px; color: #003DA5; letter-spacing: .3px; }
-    .course-title { font-size: 14px; color: #333; }
-
-    .badge { position: absolute; right: 14px; top: 14px; background: #003DA5; color: #fff; font-size: 12px; padding: 4px 10px; border-radius: 999px; box-shadow: 0 2px 8px rgba(0,0,0,.15); }
-
-    .meta { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
-    .chip { font-size: 12px; padding: 4px 8px; border-radius: 999px; background: rgba(0,61,165,.08); color: #003DA5; border: 1px solid rgba(0,61,165,.15); }
-
-    .actions { margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap; }
-    .btn-link { text-decoration: none; font-weight: 600; font-size: 13px; padding: 8px 10px; border-radius: 10px; border: 1px solid rgba(0,0,0,.1); }
-    .btn-link.primary { background: linear-gradient(135deg,#FFCC00,#00C6D7); color: #0d1b2a; border: none; }
-    .btn-link.secondary { background: #f6f8ff; color: #003DA5; }
-
-    .course-card:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(0,0,0,0.1); }
-
-    @media (max-width: 768px) {
-      .about-container { flex-direction: column; }
-      .about-left, .about-right { flex: 1; }
+    h2 {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
     }
 
-    a {
-    color: #0076C2;
-    text-decoration: none;
+    h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--blue);
+      margin: 28px 0 12px;
     }
 
-    a:hover {
-      color: #005A91;
+    p { margin-bottom: 12px; }
+
+    /* ── NEWS BOX ── */
+    .news-box {
+      background: #f0fff4;
+      border-left: 3px solid #22c55e;
+      border-radius: 0 8px 8px 0;
+      padding: 14px 18px;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+
+    .news-box strong { display: block; margin-bottom: 8px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+
+    .news-row { display: flex; gap: 12px; align-items: baseline; margin-bottom: 6px; }
+    .news-date { font-weight: 600; color: #b45309; min-width: 72px; font-size: 13px; }
+    .news-text { color: var(--text); }
+
+    /* ── TEACHING ── */
+    .uni-label {
+      font-size: 14px;
+      font-weight: 600;
+      margin: 24px 0 10px;
+      padding: 4px 0;
+      border-bottom: 2px solid;
+    }
+
+    .uni-label.ucr { color: var(--blue); border-color: var(--blue); }
+    .uni-label.ucsd { color: #00629B; border-color: #00629B; }
+    .uni-label.sdsu { color: #CC0000; border-color: #CC0000; }
+
+    .teaching-list { padding-left: 0; list-style: none; font-size: 14px; }
+    .teaching-list li { padding: 5px 0; border-bottom: 0.5px solid var(--border); display: flex; gap: 8px; align-items: baseline; }
+    .teaching-list li:last-child { border-bottom: none; }
+    .teaching-list .role-tag { font-size: 11px; font-weight: 600; background: var(--blue-light); color: var(--blue-dark); padding: 2px 7px; border-radius: 99px; white-space: nowrap; }
+
+    /* Course cards */
+    .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin: 14px 0 24px; }
+
+    .course-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      background: white;
+      transition: box-shadow 0.2s;
+    }
+
+    .course-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+
+    .course-code { font-weight: 700; font-size: 16px; color: var(--blue); }
+    .course-title { font-size: 13px; color: var(--muted); margin-top: 2px; }
+    .course-badge { display: inline-block; background: var(--blue); color: white; font-size: 11px; padding: 2px 8px; border-radius: 99px; margin-top: 8px; }
+    .course-links { margin-top: 10px; display: flex; gap: 8px; }
+    .course-links a { font-size: 12px; padding: 5px 10px; border: 1px solid var(--border); border-radius: 6px; color: var(--blue-mid); background: var(--surface); }
+    .course-links a:hover { background: var(--blue-light); text-decoration: none; }
+    .course-icon { font-size: 22px; color: var(--blue); margin-bottom: 10px; }
+
+    /* ── PUBLICATIONS ── */
+    .pub-list { list-style: none; padding: 0; }
+    .pub-list li {
+      padding: 12px 0;
+      border-bottom: 0.5px solid var(--border);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .pub-list li:last-child { border-bottom: none; }
+
+    /* ── AWARDS ── */
+    .award-list { list-style: none; padding: 0; }
+    .award-list li {
+      padding: 10px 0;
+      border-bottom: 0.5px solid var(--border);
+      font-size: 14px;
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+    }
+    .award-list li:last-child { border-bottom: none; }
+    .award-list li::before { content: "★"; color: var(--gold); font-size: 12px; flex-shrink: 0; }
+
+    /* ── TALKS ── */
+    .talk-list { list-style: none; padding: 0; }
+    .talk-list li {
+      padding: 9px 0;
+      border-bottom: 0.5px solid var(--border);
+      font-size: 14px;
+    }
+    .talk-list li:last-child { border-bottom: none; }
+
+    /* ── DIVIDER ── */
+    .divider { display: flex; align-items: center; margin: 24px 0; }
+    .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid var(--border); }
+    .divider i { margin: 0 12px; color: var(--muted); font-size: 13px; }
+
+    /* ── STUDENT CARDS ── */
+    .student-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+      margin: 20px 0;
+    }
+
+    .student-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      background: white;
+      text-align: center;
+      transition: box-shadow 0.2s;
+    }
+
+    .student-card:hover {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+
+    .student-mascot {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 16px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .student-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--blue);
+      margin-bottom: 8px;
+    }
+
+    .student-email {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 12px;
+      word-break: break-all;
+    }
+
+    .student-info {
+      font-size: 13px;
+      line-height: 1.6;
+      text-align: left;
+    }
+
+    .student-info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .student-info-row:last-child {
+      border-bottom: none;
+    }
+
+    .student-label {
+      font-weight: 600;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .student-value {
+      color: var(--text);
+      text-align: right;
+    }
+
+    .student-topic {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--blue);
+    }
+
+    /* ── REMIND HIGHLIGHT BOX ── */
+    .remind-highlight {
+      margin-bottom: 20px;
+      padding: 16px;
+      background: var(--blue-light);
+      border-radius: 8px;
+      border-left: 4px solid var(--blue);
+    }
+
+    .remind-highlight a {
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .remind-highlight a:hover {
       text-decoration: underline;
+    }
+
+    .remind-title {
+      font-size: 16px;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 8px;
+      color: var(--blue);
+    }
+
+    .remind-subtitle {
+      font-size: 13px;
+      color: var(--blue-dark);
+      line-height: 1.6;
+    }
+
+    /* ── FOOTER ── */
+    .footer { text-align: center; padding: 24px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); margin-top: 20px; }
+
+    /* ── MOBILE ── */
+    @media(max-width: 860px) {
+      .layout { grid-template-columns: 1fr; gap: 28px; padding: 24px; }
+      .sidebar { position: relative; top: auto; display: grid; grid-template-columns: 120px 1fr; gap: 18px; align-items: start; }
+      .profile-img { margin-bottom: 0; }
+      .navbar { padding: 14px 20px; }
+      .tabs { top: 53px; }
+      .tabs button { padding: 11px 14px; font-size: 13px; }
+      .student-grid { grid-template-columns: 1fr; }
+      .navbar-contact { text-align: right; font-size: 12px; }
     }
   </style>
 </head>
 <body>
-<header>
-  <div style="display:flex; align-items:center;">
-    <div>
-      <div id="name">Fatemeh Asgarinejad</div>
-      <div id="title">Assistant Professor of Teaching — Department of Electrical & Computer Engineering @ UC Riverside</div>
+
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="site-title">Fatemeh (Maral) Asgarinejad</div>
+      <div class="navbar-contact">
+        <div style="font-size:13px; color:var(--muted);">fasga001@ucr.edu</div>
+        <div style="font-size:13px; color:var(--muted);">Skye Hall 321H</div>
+      </div>
     </div>
   </div>
-  
-  <div style="display:flex; align-items:center;">
-    <img src="ucr-logo.png" alt="UCR Logo" style="height: 130px; margin: 0 10px;">
-  </div>
-  
-  <div class="contact">
-    office: tbd<br>
-    email: fatemeh.asgarinejad1@ucr.edu
-  </div>
-</header>
 
+  <!-- TABS -->
   <div class="tabs">
     <button class="active" data-tab="about">About</button>
     <button data-tab="teaching">Teaching</button>
+    <button data-tab="publications">Research & Publications</button>
+    <button data-tab="remind-lab">REMIND Lab</button>
     <button data-tab="awards">Awards</button>
-    <button data-tab="publications">Research and Publications</button>
-    <button data-tab="outreach">Outreach / Service</button>
     <button data-tab="talks">Talks</button>
+    <button data-tab="outreach">Outreach & Service</button>
   </div>
 
-  <div id="about" class="tab-content active">
-    <div class="about-container">
-      <div class="about-left">
-        <img src="IMG_0739.JPG" alt="Fatemeh Asgarinejad">
-        <div class="links">
-          <a href="https://www.linkedin.com/in/fatemeh-asgarinejad/" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-          <a href="https://github.com/Fasgarinejad" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-          <a href="mailto:fasga001@ucr.edu" title="Email"><i class="fas fa-envelope"></i></a>
-          <a href="https://www.youtube.com/@fatemehasgarinejad" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
-<a href="https://scholar.google.com/citations?user=UjbstjkAAAAJ&hl=en" target="_blank" title="Google Scholar"><img src="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/svg/google-scholar.svg" alt="Google Scholar" style="width: 24px; height: auto;"></a>        </div>
-        <img src="image2.png" alt="Second Image" style="max-width: 100%; height: auto; margin-top: 20px;">
-      </div>
+  <div class="layout">
 
-      <div class="about-right">
-      <p>Hi! 👋 I'm Fatemeh (Maral /mɑːˈrɑːl/)) Asgarinejad. I am an Assistant Professor of Teaching in <a href="https://www.ee.ucr.edu/">Electrical and Computer Engineering Department</a> at <a href="https://www.ucr.edu/">University of California Riverside</a>. My research explores the intersection of CS and ECE education—centering engaged, continuous learning—and uses machine learning, data science and mathematics to solve real-world problems.</p>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <img src="IMG_0739.JPG" class="profile-img" alt="Fatemeh (Maral) Asgarinejad">
 
-        <p>Previously, I received my Ph.D. from the <a href="https://ucsd.edu/">University of California San Diego</a>, where I had the privilege of being advised by Professors <a href="https://cseweb.ucsd.edu/~trosing/">Tajana Rosing</a> and <a href="https://aksanli.sdsu.edu/">Baris Aksanli</a> (joint with San Diego State University). During my Ph.D., I worked on Secure, Efficient and Private Computing at the Edge with Hyperdimensional Computing, and explored its synergy with Machine Learning. I am honored to have received the <a href="https://senate.ucsd.edu/grants-awards/senate-awards/distinguished-teaching-award">2025 Barbara J. and Paul D. Saltman Excellent Teaching Award from UC San Diego</a>, as well as the <a href="https://cse.ucsd.edu/graduate/cse-department-awards">2025 Excellence in Teaching Award from the UCSD Computer Science and Engineering Department</a>.</p>
+      <div>
+        <div class="s-name">Fatemeh (Maral)<br>Asgarinejad</div>
+        <div class="s-role">
+          Assistant Professor of Teaching<br>
+          Electrical & Computer Engineering<br>
+          UC Riverside
+        </div>
 
-        <p><strong>Collaborations</strong>: If you are interested in collaborating with me, please contact me at <a href="mailto:fasga001@ucr.edu">fatemeh.asgarinejad1@ucr.edu</a></p>
-
-        <div class="violet-box">
-          <strong>News</strong>:<br>
-          <span style="color:#C69214;">Feb 2026:</span> I was awarded Outstanding Service for Students in IEEE, San Diego Region<br>
-          <span style="color:#C69214;">July 2025:</span> My recent work in HD Computing was recognized as one of the two top achievements in the Cocosys Spring Quarter Review.<br>
-          <span style="color:#C69214;">May 2025:</span> I won the UCSD CSE Department Award for Excellence in Teaching<br>
-          <span style="color:#C69214;">May 2025:</span> Defended my PhD!<br>
-          <span style="color:#C69214;">May 2025:</span> Poster accepted in Mathematics Association of America MathFest.<br>
-          <span style="color:#C69214;">April 2025:</span> I won the <strong>UCSD 2025 Barbara J. and Paul D. Saltman Excellent Teaching Award</strong>!
+        <div class="social">
+          <a href="mailto:fatemeh.asgarinejad1@ucr.edu">
+            <i class="fas fa-envelope"></i> Email
+          </a>
+          <a href="https://scholar.google.com/citations?user=UjbstjkAAAAJ&hl=en" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/svg/google-scholar.svg" alt="" style="width:14px;height:14px;"> Google Scholar
+          </a>
+          <a href="https://github.com/Fasgarinejad" target="_blank">
+            <i class="fab fa-github"></i> GitHub
+          </a>
+          <a href="https://www.linkedin.com/in/fatemeh-asgarinejad/" target="_blank">
+            <i class="fab fa-linkedin"></i> LinkedIn
+          </a>
+          <a href="https://www.youtube.com/@fatemehasgarinejad" target="_blank">
+            <i class="fab fa-youtube"></i> YouTube
+          </a>
         </div>
       </div>
-    </div>
-<iframe src="https://calendar.google.com/calendar/embed?src=c_c3a172bc5e0b323b036fb1f1de6094a891c40410ce7a824a2f66bfe3425e219f%40group.calendar.google.com&ctz=America%2FLos_Angeles" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
-<div>Copyright © Fatemeh Asgarinejad — ❤️🇺🇸❤️, 🌴 San Diego🌴</div>
-  </div>
-  <div id="teaching" class="tab-content">
-    <!-- University of California, Riverside -->
-    <h4 class="university-heading current">University of California, Riverside</h4>
-    <ul>
-      <strong>Instructor</strong>, Electrical and Computer Engineering
-      <ul>
-        <li><strong style="color: #00629B;">EE 5</strong>: Circuits and Electronics (Fall 2025)</li>
-        <li><strong style="color: #FDB515;">EE 16</strong>: Data Analysis for Engineering Applications (Fall 2025)</li>
-      </ul>
-    </ul>
+    </aside>
 
-    <!-- New cool course cards for EE 05 and EE 101 -->
-    <div class="course-grid" aria-label="UCR Fall 2025 Courses">
-      <div class="course-card">
-        <span class="badge">Fall 2025</span>
-        <div class="inner">
-          <div class="course-header">
-            <i class="fa-solid fa-bolt course-icon" aria-hidden="true"></i>
-            <div>
-              <div class="course-code">EE 05</div>
-              <div class="course-title">Circuits & Electronics</div>
+    <!-- MAIN -->
+    <main>
+
+      <!-- ── ABOUT ── -->
+      <div id="about" class="tab-content active">
+        <section>
+          <h2>About</h2>
+          <p>Hi! 👋 I'm Fatemeh (Maral /mɑːˈrɑːl/) Asgarinejad. I am an Assistant Professor of Teaching in the <a href="https://www.ee.ucr.edu/">Electrical and Computer Engineering Department</a> at the <a href="https://www.ucr.edu/">University of California Riverside</a>. My research explores the intersection of CS and ECE education—centering engaged, continuous learning—and uses machine learning, data science, and mathematics to solve real-world problems.</p>
+
+          <p>Previously, I received my Ph.D. from the <a href="https://ucsd.edu/">University of California San Diego</a>, where I had the privilege of being advised by Professors <a href="https://cseweb.ucsd.edu/~trosing/">Tajana Rosing</a> and <a href="https://aksanli.sdsu.edu/">Baris Aksanli</a> (joint with San Diego State University). During my Ph.D., I worked on Secure, Efficient and Private Computing at the Edge with Hyperdimensional Computing, and explored its synergy with Machine Learning. 
+            I am honored to have received the <a href="https://senate.ucsd.edu/grants-awards/senate-awards/distinguished-teaching-award/recipient-history">2025 Barbara J. and Paul D. Saltman Excellent Teaching Award from UC San Diego</a>, as well as the <a href="https://cse.ucsd.edu/graduate/cse-department-awards">2025 Excellence in Teaching Award from the UCSD Computer Science and Engineering Department</a>.</p>
+
+            <p><strong>Collaborations:</strong> If you are a UC Riverside undergraduate student interested in joining <a href="javascript:void(0)" onclick="document.querySelector('[data-tab=remind-lab]').click()" style="cursor: pointer; color: var(--blue-mid); font-weight: 600;">REMIND Lab ↗</a>, please contact me at <a href="mailto:fatemeh.asgarinejad1@ucr.edu">fasga001@ucr.edu</a>.</p>
+
+          <div class="news-box">
+            <strong>Recent News</strong>
+            <div class="news-row"><span class="news-date">Feb 2026</span><span class="news-text">Awarded Outstanding Service for Supporting Students in IEEE, San Diego Region</span></div>
+            <div class="news-row"><span class="news-date">Jul 2025</span><span class="news-text">Recent work in HD Computing recognized as one of two top achievements in the Cocosys Spring Quarter Review</span></div>
+            <div class="news-row"><span class="news-date">May 2025</span><span class="news-text">Awarded the UCSD CSE Department Award for Excellence in Teaching</span></div>
+            <div class="news-row"><span class="news-date">May 2025</span><span class="news-text">Defended my PhD! 🎉</span></div>
+            <div class="news-row"><span class="news-date">May 2025</span><span class="news-text">Poster accepted at Mathematics Association of America MathFest</span></div>
+            <div class="news-row"><span class="news-date">Apr 2025</span><span class="news-text">Awarded the UCSD 2025 Barbara J. and Paul D. Saltman Excellent Teaching Award</span></div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- ── TEACHING ── -->
+      <div id="teaching" class="tab-content">
+        <section>
+          <h2>Teaching</h2>
+
+          <div class="uni-label ucr">University of California, Riverside</div>
+          <p style="font-size:13px; font-weight:600; color:var(--muted); margin-bottom:6px;">Electrical and Computer Engineering</p>
+          <ul class="teaching-list">
+            <li><strong>ECE 016:</strong> Data Science in Engineering — Fall 2025, Fall 2026</li>
+            <li><strong>ECE 005:</strong> Circuits and Electronics — Fall 2025, Winter, Spring, Summer and Fall 2026</li>
+            <li><strong>EE 20B:</strong> Linear Methods for Engineering Analysis and Design Using Matlab — Summer 2026</li>
+            <li><strong>ECE 105:</strong> Modeling & Simulation of Dynamic Systems — Winter 2025</li>
+          </ul>
+          <p style="font-size:13px; font-weight:600; color:var(--muted); margin:16px 0 6px;">Teaching Certificates</p>
+          <ul class="teaching-list">
+            <li>Teaching Foundations Workshop Series conducted by members of the Academy of Distinguished Teaching at UCR.</li>
+          </ul>
+
+          <div class="divider"><i class="fas fa-graduation-cap"></i></div>
+
+          <div class="uni-label ucsd">University of California, San Diego</div>
+          <p style="font-size:13px; font-weight:600; color:var(--muted); margin-bottom:6px;">Instructor — Computer Science and Engineering</p>
+          <ul class="teaching-list">
+            <li><span class="role-tag">Instructor</span> <strong>CSE 20:</strong> Discrete Mathematics &nbsp;<a href="CSE20_Summer_2024.html">[Site]</a> &nbsp;<a href="https://drive.rle.com/file/d/1BRmIGQutY4DPvpvFwI-xlrVUsYrCOxp1/view?usp=sharing" target="_blank">[Syllabus]</a> — Summer 2024</li>
+          </ul>
+
+          <p style="font-size:13px; font-weight:600; color:var(--muted); margin:16px 0 6px;">Teaching Assistant — Computer Science and Engineering</p>
+          <ul class="teaching-list">
+            <li><span class="role-tag">TA</span> <strong>CSE 101:</strong> Design and Analysis of Algorithms — Summer 2023</li>
+            <li><span class="role-tag">TA</span> <strong>CSE 20:</strong> Discrete Mathematics — Spring 2021, Spring 2022, Summer 2022, Winter 2023, Spring 2023, Winter 2025, Spring 2025</li>
+            <li><span class="role-tag">TA</span> <strong>CSE 21:</strong> Mathematics for Algorithms and Systems Analysis — Winter, Spring, Fall 2024</li>
+          
+          </ul>
+
+
+          <p style="font-size:13px; font-weight:600; color:var(--muted); margin:16px 0 6px;">Teaching Assistant — Halıcıoğlu Data Science Institute</p>
+          <ul class="teaching-list">
+            <li><span class="role-tag">TA</span> <strong>DSC 200:</strong> Data Science Programming — Fall 2023</li>
+            <li><span class="role-tag">TA</span> <strong>DSC 40A:</strong> Theoretical Foundations of Data Science — Summer 2023</li>
+          </ul>
+
+          <p style="font-size:13px; font-weight:600; color:var(--muted); margin:16px 0 6px;">Teaching Certificates</p>
+          <ul class="teaching-list">
+            <li>UC San Diego Student-Centered College Teaching &amp; Course Design Certificate</li>
+            <li>Leadership in Teaching: Graduate Peer Review of Instruction Program Certificate</li>
+            <li>Transparency in Learning and Teaching (TILT) Community of Practice Certificate</li>
+          </ul>
+
+          <div class="uni-label sdsu">San Diego State University</div>
+          <ul class="teaching-list">
+            <li><span class="role-tag">Instructor</span> First Year Seminars, four classes — Fall 2021</li>
+          </ul>
+
+          <div class="uni-label ucsd">UC San Diego Extended Studies</div>
+          <ul class="teaching-list">
+            <li><span class="role-tag">Instructor</span> Fundamentals of Data Science — July 2025</li>
+          </ul>
+
+
+          <div class="uni-label ucsd">UC San Diego Extension</div>
+          <ul class="teaching-list">
+            <li><span class="role-tag">TA</span> <strong>DSE 220x:</strong> Machine Learning Fundamentals (Prof. Sanjoy Dasgupta) — 3 semesters, Sep 2019–Aug 2020</li>
+          </ul>
+        </section>
+      </div>
+
+      <!-- ── PUBLICATIONS ── -->
+      <div id="publications" class="tab-content">
+        <section>
+          <h2>Research &amp; Publications</h2>
+
+          <div class="remind-highlight">
+            <a onclick="document.querySelector('[data-tab=remind-lab]').click()">
+              <span class="remind-title"><i class="fas fa-flask"></i> REMIND Lab @ UCR</span>
+              <span class="remind-title">
+<strong style="color: var(--gold);">R</strong>iverside <strong style="color: var(--gold);">E</strong>ducation in <strong style="color: var(--gold);">M</strong>achine <strong style="color: var(--gold);">IN</strong>telligence and <strong style="color: var(--gold);">D</strong>ata Analysis   (<strong style="color: var(--gold);">REMIND</strong>)</span>
+            </a>
+          </div>
+
+          <p style="font-size: 14px; line-height: 1.8; margin-bottom: 24px; padding: 12px 0; border-left: 3px solid var(--blue-mid); padding-left: 12px;">In REMIND, we focus on Education in Electrical and Computer Engineering, Machine Learning Applications in Medical Domains and Embedded Computing.</p>
+          
+          <div class="divider"><i class="fas fa-graduation-cap"></i></div>
+
+          <h3>Publications</h3>
+          <ul class="pub-list">
+            <li><strong>F. Asgarinejad</strong>, F. Ponzina, O. Gungor, T. Rosing, B. Aksanli, "<a href="https://www.researchgate.net/profile/Onat-Gungor/publication/386284039_HDXpose_Harnessing_Hyperdimensional_Computing's_Explainability_for_Adversarial_Attacks/links/674bc8e63d17281c7deebe28/HDXpose-Harnessing-Hyperdimensional-Computing's-Explainability-for-Adversarial-Attacks.pdf" target="_blank">HDXpose: Harnessing Hyperdimensional Computing's Explainability for Adversarial Attacks</a>," ICCAD, 2024. [<a href="https://drive.google.com/file/d/1aFNGfm4ebCrcbrD8ZCvJMOYANDoJ-V0b/view?usp=sharing">slides</a>]</li>
+            <li><strong>F. Asgarinejad</strong>, F. Asgarinejad, J. Morris, T. Rosing, B. Aksanli, "<a href="https://dl.acm.org/doi/abs/10.1145/3665314.3670852" target="_blank">VisionHD: Revisiting Hyperdimensional Computing for Improved Image Classification</a>," ISLPED, 2024.</li>
+            <li>M. Gaddi, F. Ponzina, <strong>F. Asgarinejad</strong>, B. Aksanli, T. Rosing, "<a href="https://ieeexplore.ieee.org/abstract/document/10820450" target="_blank">HyperECG: ECG Signal Inference from Radar with Hyperdimensional Computing</a>," BIBE, 2024.</li>
+            <li><strong>F. Asgarinejad</strong>, J. Morris, T. Rosing, B. Aksanli, "<a href="https://ieeexplore.ieee.org/abstract/document/10473862" target="_blank">PIONEER: Towards Highly Efficient and Accurate Hyperdimensional Computing using Learned Projection</a>," ASP-DAC, 2024. [<a href="https://drive.google.com/file/d/1UA5_tglLJhhkm3kLhmsZYRfLL5nprNRq/view?usp=sharing">slides</a>]</li>
+            <li><strong>F. Asgarinejad</strong>, A. Thomas, R. Hildebrant, Z. Zhang, S. Ren, T. Rosing, B. Aksanli, "<a href="https://www.mdpi.com/2078-2489/15/8/490" target="_blank">Optimized Early Prediction of Business Processes with Hyperdimensional Computing</a>," MDPI Information, 2024.</li>
+            <li><strong>F. Asgarinejad</strong>, X. Yu, D. Jiang, J. Morris, T. Rosing, B. Aksanli, "<a href="https://www.mdpi.com/1424-8220/24/3/1014" target="_blank">Enhanced Noise-Resilient Pressure Mat System Based on Hyperdimensional Computing</a>," MDPI Sensors, 2024.</li>
+            <li>R. Chandrasecaran, <strong>F. Asgarinejad</strong>, J. Morris, T. Rosing, "<a href="https://ieeexplore.ieee.org/abstract/document/10196438" target="_blank">Multi-label Classification with Hyperdimensional Representations</a>," IEEE ACCESS, 2023.</li>
+            <li>X. Yu, M. Zhou, <strong>F. Asgarinejad</strong>, O. Gungor, B. Aksanli, T. Rosing, "<a href="https://ieeexplore.ieee.org/abstract/document/10247820" target="_blank">Lightning Talk: Private and Secure Edge AI with Hyperdimensional Computing</a>," DAC, 2023.</li>
+            <li>Z. Zhang, R. Hildebrant, <strong>F. Asgarinejad</strong>, N. Venkatasubramanian, S. Ren, "<a href="https://ieeexplore.ieee.org/abstract/document/9610661" target="_blank">Improving Process Discovery Results by Filtering Out Outliers from Event Logs with Hidden Markov Models</a>," CBI, 2021.</li>
+            <li>R. Garcia, <strong>F. Asgarinejad</strong>, B. Khaleghi, T. Rosing, M. Imani, "<a href="https://ieeexplore.ieee.org/abstract/document/9474239" target="_blank">TruLook: A Framework for Configurable GPU Approximation</a>," DATE, 2021.</li>
+            <li><strong>F. Asgarinejad</strong>, A. Thomas, T. Rosing, "<a href="https://ieeexplore.ieee.org/abstract/document/9175328" target="_blank">Detection of Epileptic Seizures from Surface EEG using Hyperdimensional Computing</a>," EMBC, 2020. [<a href="https://drive.google.com/file/d/1G-7ESC-DQj2xH6xuVQStgZYvNy5kauNS/view?usp=sharing">slides</a>] [<a href="https://www.youtube.com/watch?v=ch0Mm9_5cPw" target="_blank">video</a>]</li>
+            <li>B. Khaleghi, S. Salamat, A. Thomas, <strong>F. Asgarinejad</strong>, Y. Kim, T. Rosing, "<a href="https://dl.acm.org/doi/abs/10.1145/3370748.3406587" target="_blank">SHEARer: Highly-Efficient Hyperdimensional Computing by Software-Hardware Enabled Multifold Approximation</a>," ISLPED, 2020.</li>
+          </ul>
+
+          <h3>Mentorship</h3>
+          <ul class="pub-list">
+            <li>Jiaying Yang, B.Sc. in Computer Science, UCSD — Addressing Catastrophic Forgetting in Neural Networks using Hyperdimensional Computing (to be submitted Fall 2025). Summer 2024–Summer 2025</li>
+            <li>Matilda Gaddi, B.Sc. in Data Science, UCSD — ECG Signal Inference from Radar with Hyperdimensional Computing (published IEEE BIBE 2024). Summer 2023–Winter 2025</li>
+            <li>A.J. Olivares, B.Sc. in Computer Science, UCSD — Addressing Catastrophic Forgetting in Neural Networks using Hyperdimensional Computing. Summer 2024</li>
+            <li>Amir Kiadi, B.Sc. in Computer Science, UCSD — Adversarial Attacks in Hyperdimensional Computing (submitted TCAD 2025). Fall 2024–Spring 2025</li>
+            <li>Ava Emami, B.Sc. in Computer Science, UCSD — Defense mechanisms using HDC (to be submitted Fall 2025). Spring 2025–Fall 2025</li>
+            <li>Lilianne Montehermoso, High School student, PRISM Center — Analyzing Adversarial Attacks in Machine Learning (submitted Journal of Students Research 2025). Summer 2024–Spring 2025</li>
+          </ul>
+        </section>
+      </div>
+
+      <!-- ── REMIND LAB ── -->
+      <div id="remind-lab" class="tab-content">
+        <section>
+          <!-- <h2><a href="javascript:void(0)" style="color: var(--blue); text-decoration: underline;">Riverside Education in Machine Intelligence and Data Analysis (REMIND)</a> at UCR</h2> -->
+          
+          <p style="margin-bottom: 24px;">REMIND lab focuses on machine learning and data analysis research with undergraduate students. Our research spans diverse applications including healthcare diagnostics, signal processing, and embedded systems and Education in Electrical and Computer Engineering.</p>
+
+          <h3>Current Students</h3>
+          
+          <div class="student-grid">
+            <!-- Francis San Juan -->
+            <div class="student-card">
+              <div class="student-name">Francis San Juan</div>
+              <div class="student-email">francis.sanjuan@email.ucr.edu</div>
+              <div class="student-info">
+                <div class="student-info-row">
+                  <span class="student-label">Major:</span>
+                  <span class="student-value">DS</span>
+                </div>
+                <div class="student-info-row">
+                  <span class="student-label">Year:</span>
+                  <span class="student-value">4</span>
+                </div>
+                <div class="student-info-row">
+                  <span class="student-label">Started:</span>
+                  <span class="student-value">Spring 2026</span>
+                </div>
+              </div>
+              <div class="student-topic"><i class="fas fa-microscope"></i> Medical Diagnostics</div>
+            </div>
+
+            <!-- Ryan Ma -->
+            <div class="student-card">
+              <div class="student-name">Ryan Ma</div>
+              <div class="student-email">rma068@ucr.edu</div>
+              <div class="student-info">
+                <div class="student-info-row">
+                  <span class="student-label">Major:</span>
+                  <span class="student-value">EE</span>
+                </div>
+                <div class="student-info-row">
+                  <span class="student-label">Year:</span>
+                  <span class="student-value">3</span>
+                </div>
+                <div class="student-info-row">
+                  <span class="student-label">Started:</span>
+                  <span class="student-value">Fall 2025</span>
+                </div>
+              </div>
+              <div class="student-topic"><i class="fas fa-heartbeat"></i> Biomedical Signal Analysis</div>
+            </div>
+
+            <!-- Tiffany Hu -->
+            <div class="student-card">
+              <div class="student-name">Tiffany Hu</div>
+              <div class="student-email">thu048@ucr.edu</div>
+              <div class="student-info">
+                <div class="student-info-row">
+                  <span class="student-label">Major:</span>
+                  <span class="student-value">ME</span>
+                </div>
+                <div class="student-info-row">
+                  <span class="student-label">Year:</span>
+                  <span class="student-value">2</span>
+                </div>
+                <div class="student-info-row">
+                  <span class="student-label">Started:</span>
+                  <span class="student-value">Fall 2025</span>
+                </div>
+              </div>
+              <div class="student-topic"><i class="fas fa-brain"></i> Neural Signal Processing</div>
+            </div>
+
+            <!-- Sebastian Sepulveda -->
+            <div class="student-card">
+              <div class="student-name">Sebastian Sepulveda</div>
+              <div class="student-email">ssepu008@ucr.edu</div>
+              <div class="student-info">
+                <div class="student-info-row">
+                  <span class="student-label">Major:</span>
+                  <span class="student-value">ME</span>
+                </div>
+                <div class="student-info-row">
+                  <span class="student-label">Year:</span>
+                  <span class="student-value">3</span>
+                </div>
+                <div class="student-info-row">
+                  <span class="student-label">Started:</span>
+                  <span class="student-value">Fall 2025</span>
+                </div>
+              </div>
+              <div class="student-topic"><i class="fas fa-flask-vial"></i> Applied Machine Learning</div>
+            </div>
+
+            <!-- Peter Hsia -->
+            <div class="student-card">
+              <div class="student-name">Peter Hsia</div>
+              <div class="student-email">peter.hsia@email.ucr.edu</div>
+              <div class="student-info">
+                <div class="student-info-row">
+                  <span class="student-label">Major:</span>
+                  <span class="student-value">EE</span>
+                </div>
+                <div class="student-info-row">
+                  <span class="student-label">Year:</span>
+                  <span class="student-value">3</span>
+                </div>
+                <div class="student-info-row">
+                  <span class="student-label">Started:</span>
+                  <span class="student-value">Spring 2026</span>
+                </div>
+              </div>
+              <div class="student-topic"><i class="fas fa-microchip"></i> Embedded Machine Learning</div>
+            </div>
+
+            <!-- Farrel Syufriza -->
+            <div class="student-card">
+              <div class="student-name">Farrel Syufriza</div>
+              <div class="student-email">fsyuf002@ucr.edu</div>
+              <div class="student-info">
+                <div class="student-info-row">
+                  <span class="student-label">Major:</span>
+                  <span class="student-value">EE</span>
+                </div>
+                <div class="student-info-row">
+                  <span class="student-label">Year:</span>
+                  <span class="student-value">3</span>
+                </div>
+                <div class="student-info-row">
+                  <span class="student-label">Started:</span>
+                  <span class="student-value">Spring 2026</span>
+                </div>
+              </div>
+              <div class="student-topic"><i class="fas fa-flask-vial"></i> Applied Machine Learning</div>
+            </div>
+
+            <!-- Noah Ozrifaioglu -->
+            <div class="student-card">
+              <div class="student-name">Noah Ozrifaioglu</div>
+              <div class="student-email">nberr010@ucr.edu</div>
+              <div class="student-info">
+                <div class="student-info-row">
+                  <span class="student-label">Started:</span>
+                  <span class="student-value">Summer 2026</span>
+                </div>
+              </div>
+              <div class="student-topic"><i class="fas fa-flask-vial"></i> Applied Machine Learning</div>
+            </div>
+
+            <!-- Nathan Berry -->
+            <div class="student-card">
+              <div class="student-name">Nathan Berry</div>
+              <div class="student-email">nozri001@ucr.edu</div>
+              <div class="student-info">
+                <div class="student-info-row">
+                  <span class="student-label">Major:</span>
+                  <span class="student-value">EE</span>
+                </div>
+                <div class="student-info-row">
+                  <span class="student-label">Year:</span>
+                  <span class="student-value">3</span>
+                </div>
+                <div class="student-info-row">
+                  <span class="student-label">Started:</span>
+                  <span class="student-value">Summer 2026</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Jose Barbosa -->
+            <div class="student-card">
+              <div class="student-name">Jose Barbosa</div>
+              <div class="student-email">jose.barbosa@email.ucr.edu</div>
+              <div class="student-info">
+              </div>
             </div>
           </div>
-          <!-- <div class="meta">
-            <span class="chip">UCR</span>
-            <span class="chip">Undergraduate</span>
-            <span class="chip">Hands-on labs</span>
-          </div> -->
-          <div class="actions">
-            <a class="btn-link secondary" href="#" aria-disabled="true">Syllabus (TBD)</a>
-            <a class="btn-link secondary" href="#" aria-disabled="true">Course Site (TBD)</a>
-          </div>
-        </div>
+        </section>
       </div>
 
-      <div class="course-card">
-        <span class="badge">Fall 2025</span>
-        <div class="inner">
-          <div class="course-header">
-            <i class="fa-solid fa-chart-line course-icon" aria-hidden="true"></i>
-            <div>
-              <div class="course-code">EE 16</div>
-              <div class="course-title">Data Analysis for Engineering Applications</div>
-            </div>
-          </div>
-          <!-- <div class="meta">
-            <span class="chip">UCR</span>
-            <span class="chip">Undergraduate</span>
-            <span class="chip">Real-World-Application-focused</span>
-          </div> -->
-          <div class="actions">
-            <a class="btn-link secondary" href="#" aria-disabled="true">Syllabus (TBD)</a>
-            <a class="btn-link secondary" href="#" aria-disabled="true">Course Site (TBD)</a>
-          </div>
-        </div>
+      <!-- ── AWARDS ── -->
+      <div id="awards" class="tab-content">
+        <section>
+          <h2>Awards &amp; Honors</h2>
+          <ul class="award-list">
+            <li>Outstanding Service for Students, IEEE San Diego Region, 2026</li>
+            <li>UCSD CSE Department Award for Excellence in Teaching, 2025</li>
+            <li><strong>UCSD 2025 Barbara J. and Paul D. Saltman Excellent Teaching Award</strong></li>
+            <li>DAC '61 Young Fellow Best Video Presentation Award, 2024</li>
+            <li>DAC Young Fellow, 61st &amp; 62nd Design Automation Conference, San Francisco, 2024 &amp; 2025</li>
+            <li>SRC Research Scholar and awarded funding for conference participation, 2024 &amp; 2025</li>
+            <li>UCSD Travel Grant, 2024</li>
+            <li>Member of HKN (Eta Kappa Nu) Honor Society of UC San Diego, since May 2022</li>
+            <li>Ranked 20th (top 0.1%) in Iran's national university entrance exam for M.Sc. in Computer Science, 2017</li>
+            <li>Ranked top 0.4% in Iran's national university entrance exam for M.Sc. in Computer Engineering, 2017</li>
+          </ul>
+        </section>
       </div>
-    </div>
 
-    <div class="hr-with-icon"><i class="fas fa-graduation-cap"></i></div>
+      <!-- ── TALKS ── -->
+      <div id="talks" class="tab-content">
+        <section>
+          <h2>Talks</h2>
 
-    <!-- University of California, San Diego -->
-    <h4 class="university-heading ucsd">University of California, San Diego</h4>
-    <ul>
-      <strong>Instructor</strong>, Computer Science and Engineering
-      <ul>
-        <li><a href="CSE20_Summer_2024.html" class="v-box"><strong>CSE 20:</strong> Discrete Mathematics (Summer 2024)</a><a href="https://drive.rle.com/file/d/1BRmIGQutY4DPvpvFwI-xlrVUsYrCOxp1/view?usp=sharing" target="_blank" style="margin-left: 10px;">[Course Syllabus]</a></li>
-      </ul>
-      <br>
-      <strong>Teaching Assistant, Computer Science and Engineering</strong>
-      <ul>
-        <li><strong>CSE 101:</strong> Design and Analysis of Algorithms (Summer 2023)</li>
-        <li><strong>CSE 20:</strong> Discrete Mathematics (Spring 2021, Spring 2022, Summer 2022, Spring 2023, Winter 2023, Winter 2025, Spring 2025)</li>
-        <li><strong>CSE 21:</strong> Mathematics for Algorithms and Systems Analysis (Winter, Spring, and Fall 2024)</li>
-      </ul>
-      <br>
-      <strong>Teaching Assistant, Halıcıoğlu Data Science Institute</strong>
-      <ul>
-        <li><strong>DSC 200:</strong> Data Science Programming (Fall 2023)</li>
-        <li><strong>DSC 40A:</strong> Theoretical Foundations of Data Science (Summer 2023)</li>
-      </ul>
-    </ul>
-    <br>
+          <h3>Invited Talks</h3>
+          <ul class="talk-list">
+            <li>SRC TECHCON, Research Scholar and Presenter — Sep 2025</li>
+            <li>Invited Seminar, IEEE Computer Society chapter, IEEE San Diego Section — Aug 2025</li>
+            <li>Panelist, UCSD SRP Professional Development Forum – Graduate Student Panel (STEM) — Jul 2025</li>
+            <li>Panelist, UCSD Teaching and Learning Commons, Summer Teaching Community 2025 — Jun 2025</li>
+            <li>UC Riverside, ECE — Logic Optimization and Multi-Level Minimization — Winter 2025</li>
+            <li>Purdue University, CS — Induction and Recursion — Winter 2025</li>
+            <li>California State University Long Beach, CECS — Towards Efficient Learning at the Edge by Hyperdimensional Computing — Winter 2025</li>
+            <li>University of Texas Austin, CS — Clustering: K-Means — Winter 2025</li>
+            <li>Texas A&amp;M University, CSE — Sorting Algorithms: Merge Sort — Winter 2025</li>
+            <li>Chapman University, CS — Simple and Multiple Linear Regression — Winter 2025</li>
+            <li>Northwestern University, Statistics and Data Science — Introduction to Hypothesis Testing — Winter 2025</li>
+            <li>Panelist, PRISM Center Annual Review, UC San Diego — Nov 2024</li>
+            <li>SRC TECHCON — "Harnessing Hyperdimensional Computing's Explainability for Adversarial Attacks" — Sep 2024</li>
+            <li>Colegio San Agustin-Bacolod University 60th Anniversary Research Conference — Jul 2023</li>
+          </ul>
 
-    <!-- San Diego State University -->
-    <h4 class="university-heading sdsu">San Diego State University</h4>
-    <ul>
-      <li><strong>Instructor:</strong> First Year Seminars, four Classes (Fall 2021)</li>
-    </ul>
-    <br>
+          <h3>Conference Talks</h3>
+          <ul class="talk-list">
+            <li>ICCAD, 2024 &nbsp;[<a href="https://drive.google.com/file/d/1aoMJYb87zvwgYjKihUkDwLyLlLSKWa-a/view?usp=sharing">slides</a>]</li>
+            <li>ASP-DAC, 2024 &nbsp;[<a href="https://drive.google.com/file/d/1UA5_tglLJhhkm3kLhmsZYRfLL5nprNRq/view?usp=sharing">slides</a>]</li>
+            <li>EMBC, 2020 &nbsp;[<a href="https://drive.google.com/file/d/1G-7ESC-DQj2xH6xuVQStgZYvNy5kauNS/view?usp=sharing">slides</a>] &nbsp;[<a href="https://www.youtube.com/watch?v=ch0Mm9_5cPw" target="_blank">video</a>]</li>
+          </ul>
+        </section>
+      </div>
 
-    <!-- UC San Diego Extended Studies -->
-    <h4 class="university-heading ucsd">UC San Diego Extended Studies</h4>
-    <ul>
-      <li><strong>Instructor</strong> Fundamentals of Data Science (July 2025)</li>
-    </ul>
-    <br>
+      <!-- ── OUTREACH ── -->
+      <div id="outreach" class="tab-content">
+        <section>
+          <h2>Outreach &amp; Service</h2>
 
-    <!-- UC San Diego Extension -->
-    <h4 class="university-heading ucsd">UC San Diego Extension</h4>
-    <ul>
-      <li><strong>Teaching Assistant:</strong> DSE 220x - Machine Learning Fundamentals (Prof. Sanjoy Dasgupta, Three Semesters Sep 2019 - Aug 2020)</li>
-    </ul>
-    <br>
+          <h3>Belonging, Diversity &amp; Equity</h3>
+          <ul class="talk-list">
+            <li>Research Mentor, UC San Diego <a href="https://seelab.ucsd.edu/index.html" target="_blank">SEElab</a> — Aug 2023–Summer 2025</li>
+            <li><a href="https://ucsdwic.github.io/" target="_blank">Women In Computing Mentorship Program</a>, UC San Diego — Fall 2024–Winter 2025</li>
+            <li>Research Mentor, PRISM Center Virtual High School Research Program — Summer 2024</li>
+            <li><a href="https://hkn.ucsd.edu/" target="_blank">HKN (Eta Kappa Nu) Honor Society</a> Outreach Program for middle &amp; high school students</li>
+            <li><a href="https://www.learn-python.ir/" target="_blank">Algorithmic Creativity and Python Programming Summer School Mentor</a>, Sharif University of Technology — Summer 2023</li>
+          </ul>
 
-    <h4 class="university-heading ucsd">UC San Diego Teaching Certificates</h4>
-    <ul>
-      <li><strong>UC San Diego Student-Centered College Teaching & Course Design Certificate</strong></li>
-      <li><strong>Leadership in Teaching: Graduate Peer Review of Instruction Program Certificate</strong></li>
-      <li><strong>Transparency in Learning and Teaching (TILT) Community of Practice Certificate</strong></li>
-    </ul>
+          <h3>Professional Service</h3>
+          <ul class="talk-list">
+            <li>Graduate Mentor to two undergraduate students for SRC TECHCON — Sep 2025</li>
+            <li>Panel Moderator, UCSD 2025 Undergraduate Summer Research Conference — Aug 2025</li>
+            <li>Student Activities Chair, IEEE San Diego Section — Summer 2025–present</li>
+            <li>Reviewer, ACM Computing Surveys</li>
+            <li>Reviewer, Signal, Image and Video Processing</li>
+          </ul>
+        </section>
+      </div>
+
+    </main>
   </div>
 
-  <div id="publications" class="tab-content">
-    <h3 class="section-heading">Publications</h3>
-    <ul>
-      <li><strong>F. Asgarinejad</strong>, F. Ponzina, O. Gungor, T. Rosing, B. Aksanli, "<a href="https://www.researchgate.net/profile/Onat-Gungor/publication/386284039_HDXpose_Harnessing_Hyperdimensional_Computing's_Explainability_for_Adversarial_Attacks/links/674bc8e63d17281c7deebe28/HDXpose-Harnessing-Hyperdimensional-Computings-Explainability-for-Adversarial-Attacks.pdf">HDXpose: Harnessing Hyperdimensional Computing's Explainability for Adversarial Attacks</a>", ICCAD, 2024. [<a href="https://drive.google.com/file/d/1aFNGfm4ebCrcbrD8ZCvJMOYANDoJ-V0b/view?usp=sharing">slides</a>]</li>
-      <li><strong>F. Asgarinejad</strong>, F. Asgarinejad, J. Morris, T. Rosing, B. Aksanli, <a href="https://dl.acm.org/doi/abs/10.1145/3665314.3670852">VisionHD: Revisiting Hyperdimensional Computing for Improved Image Classification</a>, ISLPED, 2024.</li>
-      <li>M. Gaddi, F. Ponzina, <strong>F. Asgarinejad</strong>, B. Aksanli, T. Rosing, "<a href="https://ieeexplore.ieee.org/abstract/document/10820450">HyperECG: ECG Signal Inference from Radar with Hyperdimensional Computing</a>", BIBE, 2024.</li>
-      <li><strong>F. Asgarinejad</strong>, J. Morris, T. Rosing, B. Aksanli, <a href="https://ieeexplore.ieee.org/abstract/document/10473862">PIONEER: Towards Highly Efficient and Accurate Hyperdimensional Computing using Learned Projection</a>, ASP-DAC, 2024. [<a href="https://drive.google.com/file/d/1UA5_tglLJhhkm3kLhmsZYRfLL5nprNRq/view?usp=sharing">slides</a>]</li>
-      <li><strong>F. Asgarinejad</strong>, A. Thomas, R. Hildebrant, Z Zhang, S. Ren. Rosing, B. Aksanli <a href="https://www.mdpi.com/2078-2489/15/8/490">Optimized Early Prediction of Business Processes with Hyperdimensional Computing</a>, MDPI Information, 2024.</li>
-      <li><strong>F. Asgarinejad</strong>, X. Yu, D. Jiang, J. Morris, T. Rosing, B. Aksanli, <a href="https://www.mdpi.com/1424-8220/24/3/1014">Enhanced Noise-Resilient Pressure Mat System Based on Hyperdimensional Computing</a>, MDPI Sensors, 2024.</li>
-      <li>R. Chandrasecaran, <strong>F. Asgarinejad</strong>, J. Morris, T. Rosing, <a href="https://ieeexplore.ieee.org/abstract/document/10196438">Multi-label classification with Hyperdimensional Representations</a> IEEE ACCESS, 2023.</li>
-      <li>X. Yu, M. Zhou, <strong>F. Asgarinejad</strong>, O. Gungor, B. Aksanli, T. Rosing, <a href="https://ieeexplore.ieee.org/abstract/document/10247820">Lightning Talk: Private and Secure Edge AI with Hyperdimensional Computing</a>, DAC, 2023.</li>
-      <li>Z. Zhang, R. Hildebrant, <strong>F. Asgarinejad</strong>, N. Venkatasubramanian, S. Ren, <a href="https://ieeexplore.ieee.org/abstract/document/9610661">Improving Process Discovery Results by Filtering Out Outliers from Event Logs with Hidden Markov Models</a>, CBI, 2021.</li>
-      <li>R. Garcia, <strong>F. Asgarinejad</strong>, B. Khaleghi, T. Rosing, M. Imani <a href="https://ieeexplore.ieee.org/abstract/document/9474239">TruLook: A Framework for Configurable GPU Approximation</a>, DATE, 2021.</li>
-      <li><strong>F. Asgarinejad</strong>, A. Thomas, T. Rosing, <a href="https://ieeexplore.ieee.org/abstract/document/9175328">Detection of Epileptic Seizures from Surface EEG using Hyperdimensional Computing</a>, EMBC, 2020. [<a href="https://drive.google.com/file/d/1G-7ESC-DQj2xH6xuVQStgZYvNy5kauNS/view?usp=sharing">slides</a>], [<a href="https://www.youtube.com/watch?v=ch0Mm9_5cPw">presentation</a>]</li>
-      <li>B. Khaleghi, S. Salamat, A. Thomas, <strong>F. Asgarinejad</strong>, Y. Kim, T. Rosing, <a href="https://dl.acm.org/doi/abs/10.1145/3370748.3406587">SHEARer Highly-Efficient Hyperdimensional Computing by Software-Hardware Enabled Multifold Approximation</a>, ISLPED, 2020.</li>
-    </ul>
-
-    <h3 class="section-heading">Mentorship</h3>
-    <ul>
-      <li>Jiaying Yang, B.Sc. student in Computer Science, UCSD, Project: Addressing Catastrophic Forgetting in Neural Networks using Hyperdimensional Computing (to be submitted in Fall 2025). Summer 2024-Summer 2025</li>
-      <li>Matilda Gaddi, B.Sc. student in Data Science, UCSD, Project: ECG Signal Inference from Radar with Hyperdimensional Computing (published in IEEE BIBE 2024). Summer 2023-Winter 2025</li>
-      <li>A.J. Olivares, B.Sc. student in Computer Science, UCSD, Project: Addressing Catastrophic Forgetting in Neural Networks using Hyperdimensional Computing. Summer 2024</li>
-      <li>Amir Kiadi, B.Sc. student in Computer Science, UCSD, Project: Adversarial Attacks in Hypedimensional Computing (submitted to TCAD 2025). Fall 2025-Spring 2025</li>
-      <li>Ava Emami, B.Sc. student in Computer Science, UCSD, Project: Defense mechanisms using HDC (to be submitted in Fall 2025). Spring 2025-Fall 2025</li>
-      <li>Lilianne Montehermoso, High School student, PRISM Center Research Program, Project: Analyzing Adversarial Attacks in Machine Learning (submitted to journal of students research 2025). Summer 2024-Spring 2025</li>
-    </ul>
-  </div>
-
-  <div id="talks" class="tab-content">
-    <h3 class="section-heading">Invited Talks</h3>
-    <ul>
-      <li>SRC TECHCON, Research Scholar and Presenter, Sep 2025</li>
-      <li>2025 Invited Seminar Series organized by IEEE Computer Society chapter of IEEE San Diego Section, Aug 2025</li>
-      <li>Panelist, UCSD SRP Professional Development Forum - Graduate Student Panel (STEM), July 2025</li>
-      <li>Panelist, UCSD Teaching and Learning Commons, Summer Teaching Community 2025, June 2025</li>
-      <li>University of California Riverside, ECE, Logic Optimization and Multi-Level Minimization, Winter 2025</li>
-      <li>Purdue University, CS, Induction and Recursion, Winter 2025</li>
-      <li>California State University Long Beach, CECS, Towards Efficient Learning at the Edge by Hyperdimensional Computing, Winter 2025</li>
-      <li>University of Texas Austin, CS, Clustering: K-Means, Winter 2025</li>
-      <li>University of Texas A&M, CSE, Sorting Algorithms: Merge Sort, Winter 2025</li>
-      <li>Chapman University, CS, Simple and Multiple Linear Regression, Winter 2025</li>
-      <li>Northwestern University, Statistics and Data Science, Introduction to Hypothesis Testing and its Application in Real-Life and Data Science, Winter 2025</li>
-      <li>Panelist, PRISM Center Annual Review, UC San Diego, "PRISM Center Summer Virtual High School Program", Nov 2024</li>
-      <li>SRC TECHCON, "Harnessing Hyperdimensional Computing's Explainability for Adversarial Attacks", Sep 2024</li>
-      <li>Colegio San Agustin-Bacolod University's 60th Founding Anniversary Research Conference, "Applying Machine Learning and Brain-Inspired Computing for Innovative Problem Solving", July 2023</li>
-    </ul>
-
-    <h3 class="section-heading">Conference Talks</h3>
-    <ul>
-      <li>ICCAD, 2024 [<a href="https://drive.google.com/file/d/1aoMJYb87zvwgYjKihUkDwLyLlLSKWa-a/view?usp=sharing">slides</a>]</li>
-      <li>ASP-DAC, 2024 [<a href="https://drive.google.com/file/d/1UA5_tglLJhhkm3kLhmsZYRfLL5nprNRq/view?usp=sharing">slides</a>]</li>
-      <li>EMBC, 2020 [<a href="https://drive.google.com/file/d/1G-7ESC-DQj2xH6xuVQStgZYvNy5kauNS/view?usp=sharing">slides</a>] | [<a href="https://www.youtube.com/watch?v=ch0Mm9_5cPw">presentation</a>]</li>
-    </ul>
-  </div>
-
-  <div id="awards" class="tab-content">
-    <ul>
-      <li>UCSD CSE Department Award for Excellence in Teaching, 2025</li>
-      <li><strong>UCSD 2025 Barbara J. and Paul D. Saltman Excellent Teaching Award</strong></li>
-      <li>DAC'61 Young Fellow Best Video Presentation Award, 2024</li>
-      <li>DAC Young Fellow at the 61st and 62nd Design Automation Conference in San Francisco, 2024, 2025</li>
-      <li>SRC Research Scholar and awarded funding for conference participation, 2024, 2025</li>
-      <li>UCSD travel grant, 2024</li>
-      <li>Member of HKN (Eta Kappa Nu) Honor Society of UC San Diego since May 2022</li>
-      <li>Ranked 20th (top 0.1%) in Iran's national university entrance exam for M.Sc. in Computer Science, 2017</li>
-      <li>Ranked top 0.4% in Iran's national university entrance exam for M.Sc. in Computer Engineering, 2017</li>
-      <!-- <li>Ranked top 0.9% and top 3.4% nationwide in Iran’s national university entrance exams for B.Sc. programs in Foreign Languages and Mathematics, respectively, 2012</li> -->
-
-    </ul>
-  </div>
-
-  <div id="outreach" class="tab-content">
-    <h3 class="section-heading">Belonging, Diversity and Equity</h3>
-    <ul>
-      <li>Research Mentor (at UC San Diego, <a href="https://seelab.ucsd.edu/index.html">SEElab</a> August 2023 - Summer 2025</li>
-      <li><a href="https://ucsdwic.github.io/">Women In Computing Mentorship Program (at UC San Diego)</a>, Fall 2024 - Winter 2025</li>
-      <li>Research Mentor (at UC San Diego, PRISM Center), <a href=https://cse.ucsd.edu/about/news/prisms-summer-outreach-program-introduces-high-school-students-world-scientific-research">Virtual High School Research Program for high school students</a>, Summer 2024</li>
-      <li><a href="https://hkn.ucsd.edu/">HKN (Eta Kappa Nu) Honor Society of UC San Diego</a> Outreach Program for middle-school and High-school students</li>
-      <li><a href=https://www.learn-python.ir/">Algorithmic Creativity and Python Programming Summer School Mentor (at Sharif University of Technology)</a>, under supervision of Prof. Ali Sharifi-Zarchi, Summer 2023 (in Persian)</li>
-    </ul>
-
-    <h3 class="section-heading">Professional Service</h3>
-    <ul>
-      <li>Graduate mentor to two undergraduate students for SRC TECHCON, Sep 2025</li>
-      <li>Panel Moderator at the UCSD 2025 Undergraduate Summer Research Conference, August 2025</li>
-      <li>Reviewer for ACM Computing Surveys</li>
-      <Li>Reviewer for Signal, Image and Video Processing</Li>
-      <li>Student Activities Chair for IEEE San Diego Section, summer 2025 - present</li>
-    </ul>
-
-  </div>
+  <div class="footer">Copyright © Fatemeh (Maral) Asgarinejad &nbsp;·&nbsp; 🌴 Riverside/San Diego🌴 - United States of America 🇺🇸</div>
 
   <script>
-
     const buttons = document.querySelectorAll('.tabs button');
     const contents = document.querySelectorAll('.tab-content');
 
-    buttons.forEach(button => {
-      button.addEventListener('click', () => {
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
         buttons.forEach(b => b.classList.remove('active'));
         contents.forEach(c => c.classList.remove('active'));
-        button.classList.add('active');
-        document.getElementById(button.dataset.tab).classList.add('active');
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.tab).classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       });
     });
   </script>
+
 </body>
 </html>
