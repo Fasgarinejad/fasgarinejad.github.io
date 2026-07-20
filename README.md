@@ -358,7 +358,7 @@
 
     <h3 class="section-heading">Professional Service</h3>
     <ul>
-      <li>Graduate mentor to two undergraduate students for SRC TECHCON, Sep 2025</li>
+      <li>Graduate mentor to undergraduate students for SRC TECHCON, Sep 2025</li>
       <li>Panel Moderator at the UCSD 2025 Undergraduate Summer Research Conference, August 2025</li>
       <li>Reviewer for ACM Computing Surveys</li>
       <Li>Reviewer for Signal, Image and Video Processing</Li>
